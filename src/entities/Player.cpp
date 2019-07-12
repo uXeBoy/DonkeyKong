@@ -55,7 +55,6 @@ int8_t Player::getXPosition(bool updatePrevPosition) {
 int8_t Player::getYPosition() {
 
   int8_t y = pgm_read_byte(&Coordinates::Player[(this->position * 5) + 1]) - this->yOffset - pgm_read_byte(&jumpPositions[this->jumpPosition]);
-  //Serial.println(y);
   return y;
 
 }

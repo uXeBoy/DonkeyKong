@@ -241,7 +241,7 @@ void Gorilla::launch(Barrel *barrel, uint8_t launchBarrelDelay) {
   this->barrel = barrel;
   this->launchBarrel = 0;
   this->launchBarrelDelay = launchBarrelDelay;
-  this->pauseAtPosition = launchBarrelDelay + 50;
+  this->pauseAtPosition = launchBarrelDelay + 60;
 
 }
 

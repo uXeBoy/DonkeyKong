@@ -9,16 +9,23 @@ void BaseState::renderScore(StateMachine & machine, int16_t health) {
   auto & gameStats = machine.getContext().gameStats;
   auto & arduboy = machine.getContext().arduboy;
 
-  Sprites::drawExternalMask(102, 0, Images::Scoreboard, Images::Scoreboard_Mask, 0, 0);
+// SJH Scoreboard
+//  Sprites::drawExternalMask(102, 0, Images::Scoreboard, Images::Scoreboard_Mask, 0, 0);
+  Sprites::drawExternalMask(96, 0, Images::Scoreboard, Images::Scoreboard_Mask, 0, 0);
 
   uint8_t digits[4] = {};
   extractDigits(digits, gameStats.score);
 
   for (uint8_t j = 4; j > 0; --j) {
 
-    Sprites::drawSelfMasked(125 - (j*5), 3, Images::Scoreboard_Numbers, digits[j - 1]);
+//    Sprites::drawSelfMasked(125 - (j*5), 3, Images::Scoreboard_Numbers, digits[j - 1]);
+    Sprites::drawSelfMasked(127 - (j*5), 3, Images::Scoreboard_Numbers, digits[j - 1]);
 
   }
+
+  if (gameStats.numberOfLivesLeft >= 1) Sprites::drawSelfMasked(101, 3, Images::Scoreboard_Blip, 0);
+  if (gameStats.numberOfLivesLeft >= 2) Sprites::drawSelfMasked(99, 5, Images::Scoreboard_Blip, 0);
+  if (gameStats.numberOfLivesLeft >= 3) Sprites::drawSelfMasked(103, 5, Images::Scoreboard_Blip, 0);
 
 }
 
