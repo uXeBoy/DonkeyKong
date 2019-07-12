@@ -292,45 +292,23 @@ void PlayGameState::update(StateMachine & machine) {
     // and it to be too close together.
     {
       uint8_t gorillaPosition = this->gorilla.isInPosition();
-      bool launch = this->gorilla.readyToLaunchNewBarrel();
-
       uint8_t barrelsEnabled = 0;
 
-      for (auto &barrel : this->barrels) {
-        
-        if (barrel.isEnabled()) {
+      bool launch = this->gorilla.readyToLaunchNewBarrel() || random(0,3) == 2;
 
-          barrelsEnabled++;
-
-        }
-
-      }
-
-      if (barrelsEnabled >= this->numberOfBarrelsInPlay) launch = false;
-      if (random(0,3) <= 1) launch = false;
-
-// Serial.print("GP: ");
-// Serial.print(gorillaPosition);
-// Serial.print(", launch: ");
-// Serial.println(launch);
+      Barrel* disabledBarrel = nullptr;
 
       if (launch) {
 
-//  for (uint8_t x=0; x<this->numberOfBarrelsInPlay; x++) {
-//           auto &barrel = this->barrels[x];
-//           // Serial.print(barrel.getXPosition());
-//           // Serial.print(",");
-//           // Serial.print(barrel.getYPosition(0));
-//           // Serial.print(",");
-//           Serial.print(barrel.getPosition());
-//           Serial.print("=");
-//         }
-//  Serial.println(".");
-
-
         for (auto &barrel : this->barrels) {
-          
+
+          if (!barrel.isEnabledOrPending()) { 
+            disabledBarrel = &barrel;
+          }
+
           if (barrel.isEnabled()) {
+
+            barrelsEnabled++;
 
             if (barrel.getPosition() < 78 && barrel.getAisle() != gorillaPosition) { launch = false;}
             if (barrel.getPosition() >= BARREL_POSITION_1_START && barrel.getPosition() < BARREL_POSITION_1_START + 8 && barrel.getAisle() == gorillaPosition && barrel.getAisle() == 0) { launch = false;}
@@ -340,55 +318,14 @@ void PlayGameState::update(StateMachine & machine) {
           }
 
         }
-        
-      }
 
+        if (barrelsEnabled >= this->numberOfBarrelsInPlay) launch = false;
 
-      // Are we able to launch a barrel?
-//   Serial.print("GP:");
-//   Serial.print(gorillaPosition);
-//   Serial.print(") ");
-//  for (uint8_t x=0; x<this->numberOfBarrelsInPlay; x++) {
-//           auto &barrel = this->barrels[x];
-//           if (barrel.isEnabled()) {
-//           // Serial.print(barrel.getXPosition());
-//           // Serial.print(",");
-//           // Serial.print(barrel.getYPosition(0));
-//           // Serial.print(",");
-//           Serial.print(barrel.getPosition());
-//           Serial.print(":");
-//           Serial.print(barrel.getAisle());
-//           Serial.print("=");
-//           }
-//         }
-//   Serial.print(" ... ");
-//   Serial.print(launch);
-//   Serial.println(" ...");
+        if (launch && disabledBarrel != nullptr) {
 
-
-      if (launch) {
-  // Serial.println(".. launch good to go! ");
-  // Serial.print("..launch good to go! ");
-  //       for (uint8_t x=0; x<this->numberOfBarrelsInPlay; x++) {
-  //         auto &barrel = this->barrels[x];
-  //         Serial.print(barrel.isEnabledOrPending());
-  //       }
-  // Serial.println(".");
-
-        for (auto &barrel : this->barrels) {
-
-
-          // Look for a barrel that is not enabled (or about to be launched) ..
-
-          if (!barrel.isEnabledOrPending()) { 
-
-            uint8_t countdown = random(5, 40);
-            Barrel* ptr_Barrel = &barrel;
-            barrel.setEnabledCountdown(countdown);
-            this->gorilla.launch(ptr_Barrel, countdown);
-            break;
-
-          }
+          uint8_t countdown = random(5, 40);
+          disabledBarrel->setEnabledCountdown(countdown);
+          this->gorilla.launch(disabledBarrel, countdown);
 
         }
 
@@ -536,10 +473,6 @@ void PlayGameState::update(StateMachine & machine) {
 
   switch (this->introDelay) {
 
-    case 101 ... 255:
-      this->introDelay--;
-      break;
-
     case 100:
       this->showLivesLeft = true;
       if (gameStats.numberOfLivesLeft > 0) {
@@ -552,11 +485,6 @@ void PlayGameState::update(StateMachine & machine) {
           this->gorilla.reset();
         }
       }
-      this->introDelay--;
-      break;
-
-    case 2 ... 99:
-      this->introDelay--;
       break;
 
     case 1:
@@ -574,6 +502,8 @@ void PlayGameState::update(StateMachine & machine) {
       break;
 
   }
+
+  if(this->introDelay > 0) --this->introDelay;
 
 
   // Handle other buttons ..

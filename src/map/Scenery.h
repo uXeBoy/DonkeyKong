@@ -2,7 +2,7 @@
 
 #include "../utils/Enums.h"
 
-#define SCENERY_COUNT 76
+#define SCENERY_COUNT 78
 #define SCENERY_LEVEL_2_ONLY 128
 #define SCENERY_PAINT_LAST 64
 #define SCENERY_PAINT_FIRST 0
@@ -41,12 +41,14 @@ namespace Coordinates {
     35, 75, static_cast<uint8_t>(Components::Girder_OverHead),
     87, 80, static_cast<uint8_t>(Components::Girder_OverHead),
     95, 80, static_cast<uint8_t>(Components::Girder_OverHead),
+    107, 80, static_cast<uint8_t>(Components::Girder_OverHead),
+    119, 80, static_cast<uint8_t>(Components::Girder_OverHead),
 
   99, 73, static_cast<uint8_t>(Components::Girder_OverHead),
   111, 73, static_cast<uint8_t>(Components::Girder_OverHead),
   123, 73, static_cast<uint8_t>(Components::Girder_OverHead),
 
-    109, 80, static_cast<uint8_t>(Components::EasyHard),
+    107, 80, static_cast<uint8_t>(Components::EasyHard),
 
 
     87, 63, static_cast<uint8_t>(Components::Girder_OverHead),

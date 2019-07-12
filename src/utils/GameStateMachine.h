@@ -17,7 +17,7 @@ class GameStateMachine {
 		StateId currentState;
 
 	public:
-		virtual ~GameStateMachine(void) = default;
+		//virtual ~GameStateMachine(void) = default;
 		Context & getContext(void) { return this->context; }
 		const Context & getContext(void) const { return this->context; }
     const StateId getCurrentState() { return this->currentState; }

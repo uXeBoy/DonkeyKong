@@ -6,10 +6,10 @@
 #define _DEBUG
 
 // Comment out IGNORE_BARREL_COLLISIONS to include colllision detection ..
-#define _IGNORE_BARREL_COLLISIONS
+#define IGNORE_BARREL_COLLISIONS
 #define NUMBER_OF_HOOKS 4
 // Comment out IGNORE_SOUNDS to include sounds ..
-#define _IGNORE_SOUNDS
+#define IGNORE_SOUNDS
 
 // - Game play stuff ---------------------
  
