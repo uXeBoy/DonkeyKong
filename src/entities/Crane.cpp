@@ -29,12 +29,6 @@ void Crane::setLiftPlayer(bool liftPlayer) {
 
 }
 
-uint8_t Crane::getImage() {
-
-  return static_cast<uint8_t>(this->position);
-
-}
-
 void Crane::turnOn() {
 
   this->liftPlayer = false;

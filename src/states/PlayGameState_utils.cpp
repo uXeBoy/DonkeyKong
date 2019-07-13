@@ -104,8 +104,41 @@ uint8_t PlayGameState::drawScenery(StateMachine & machine, uint8_t paintMode) {
             break;
           
           case static_cast<uint8_t>(Components::Crane):
-            imageName = Images::Crane;
-            imageIndex = this->crane.getImage();
+            {
+              uint8_t intPosition = static_cast<uint8_t>(this->crane.getPosition());
+
+              switch (this->crane.getPosition()) {
+
+                case CranePosition::Upright_01 ... CranePosition::Upright_03:
+                  xOffset = 9;
+                  yOffset = 0;
+                  imageName = Images::Crane_Upright;
+                  imageIndex = intPosition - static_cast<uint8_t>(CranePosition::Upright_01);
+                  break;
+
+                case CranePosition::Inclined_01 ... CranePosition::Inclined_05:
+                  xOffset = 0;
+                  yOffset = 0;
+                  imageName = Images::Crane_Inclined;
+                  imageIndex = intPosition - static_cast<uint8_t>(CranePosition::Inclined_01);
+                  break;
+
+                case CranePosition::Flat:
+                  xOffset = 0;
+                  yOffset = 16;
+                  imageName = Images::Crane_Flat;
+                  imageIndex = 0;
+                  break;
+
+                case CranePosition::Declined:
+                  xOffset = 9;
+                  yOffset = 16;
+                  imageName = Images::Crane_Declined;
+                  imageIndex = 0;
+                  break;
+
+              }
+            }
             break;
           
           case static_cast<uint8_t>(Components::Hook):

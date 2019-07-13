@@ -26,7 +26,6 @@ class Crane : public Base {
     void turnOn();
     void turnOff();
     void update();
-    uint8_t getImage();
 
   private:
 
