@@ -1,6 +1,7 @@
 #include "PlayGameState.h"
 
 #include "../utils/Arduboy2Ext.h"
+#include "../utils/Utils.h"
 #include "../images/Images.h"
 #include "../sounds/Sounds.h"
 
@@ -290,77 +291,89 @@ void PlayGameState::update(StateMachine & machine) {
     // in a position in the center of the plates.  If this is true, then we ensure there are
     // no existing barrels that have just been launched that would result in the new barrel 
     // and it to be too close together.
+    
     {
       uint8_t gorillaPosition = this->gorilla.isInPosition();
+      bool launch = this->gorilla.readyToLaunchNewBarrel();
+      if (random(0,3) <= 1) launch = false;
+
       uint8_t barrelsEnabled = 0;
 
-      bool launch = this->gorilla.readyToLaunchNewBarrel() || random(0,3) == 2;
-
-      Barrel* disabledBarrel = nullptr;
-
       if (launch) {
-Serial.print("Launch: ");
-        for (auto &barrel : this->barrels) {
+      for (auto &barrel : this->barrels) {
+        
+        if (barrel.isEnabled()) {
 
-          if (!barrel.isEnabledOrPending()) { 
-            disabledBarrel = &barrel;
-          }
-
-          if (barrel.isEnabled()) {
-
-            barrelsEnabled++;
+          barrelsEnabled++;
 
             if (barrel.getPosition() < 78 && barrel.getAisle() != gorillaPosition) { launch = false;}
             if (barrel.getPosition() >= BARREL_POSITION_1_START && barrel.getPosition() < BARREL_POSITION_1_START + 8 && barrel.getAisle() == gorillaPosition && barrel.getAisle() == 0) { launch = false;}
             if (barrel.getPosition() >= BARREL_POSITION_2_START && barrel.getPosition() < BARREL_POSITION_2_START + 8 && barrel.getAisle() == gorillaPosition && barrel.getAisle() == 1) { launch = false;}
             if (barrel.getPosition() >= BARREL_POSITION_3_START && barrel.getPosition() < BARREL_POSITION_3_START + 8 && barrel.getAisle() == gorillaPosition && barrel.getAisle() == 2) { launch = false;}
 
-          }
-
         }
-Serial.print(" check1 ");
-Serial.print((launch ? "T":"F"));
-
-        if (barrelsEnabled >= this->numberOfBarrelsInPlay) {
-Serial.print(" barrelsEnabled > " + this->numberOfBarrelsInPlay);
-          launch = false;
-        }
-
-//         if (launch && (disabledBarrel != nullptr)) {
-
-// Serial.print(" launch Barrel ! ");
-//           uint8_t countdown = random(5, 40);
-// Serial.print(countDown);
-//           disabledBarrel->setEnabledCountdown(countdown);
-//           this->gorilla.launch(disabledBarrel, countdown);
-
-//         }
-
-        if (launch) {
-Serial.print("launch me");
-          for (auto &barrel : this->barrels) {
-
-
-            // Look for a barrel that is not enabled (or about to be launched) ..
-
-            if (!barrel.isEnabledOrPending()) { 
-Serial.print("Go gadget");
-
-              uint8_t countdown = random(5, 40);
-              Barrel* ptr_Barrel = &barrel;
-              barrel.setEnabledCountdown(countdown);
-              this->gorilla.launch(ptr_Barrel, countdown);
-              break;
-
-            }
-
-          }
-
-        }
-
 
       }
-Serial.println("");
+
+      }
+
+      if (barrelsEnabled >= this->numberOfBarrelsInPlay) launch = false;
+
+// Serial.print("GP: ");
+// Serial.print(gorillaPosition);
+// Serial.print(", launch: ");
+// Serial.println(launch);
+
+      // Are we able to launch a barrel?
+//   Serial.print("GP:");
+//   Serial.print(gorillaPosition);
+//   Serial.print(") ");
+//  for (uint8_t x=0; x<this->numberOfBarrelsInPlay; x++) {
+//           auto &barrel = this->barrels[x];
+//           if (barrel.isEnabled()) {
+//           // Serial.print(barrel.getXPosition());
+//           // Serial.print(",");
+//           // Serial.print(barrel.getYPosition(0));
+//           // Serial.print(",");
+//           Serial.print(barrel.getPosition());
+//           Serial.print(":");
+//           Serial.print(barrel.getAisle());
+//           Serial.print("=");
+//           }
+//         }
+//   Serial.print(" ... ");
+//   Serial.print(launch);
+//   Serial.println(" ...");
+
+
+      if (launch) {
+  // Serial.println(".. launch good to go! ");
+  // Serial.print("..launch good to go! ");
+  //       for (uint8_t x=0; x<this->numberOfBarrelsInPlay; x++) {
+  //         auto &barrel = this->barrels[x];
+  //         Serial.print(barrel.isEnabledOrPending());
+  //       }
+  // Serial.println(".");
+
+        for (auto &barrel : this->barrels) {
+
+
+          // Look for a barrel that is not enabled (or about to be launched) ..
+
+          if (!barrel.isEnabledOrPending()) { 
+
+            uint8_t countdown = random(5, 40);
+            Barrel* ptr_Barrel = &barrel;
+            barrel.setEnabledCountdown(countdown);
+            this->gorilla.launch(ptr_Barrel, countdown);
+            break;
+
+          }
+
+        }
+
+      }
+
 
       // Update barrel positions and detect collisions with the player ..
 
@@ -533,7 +546,7 @@ Serial.println("");
 
   }
 
-  if(this->introDelay > 0) --this->introDelay;
+  decToZero(this->introDelay);
 
 
   // Handle other buttons ..
