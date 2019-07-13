@@ -6,20 +6,29 @@ namespace Sounds {
   const uint16_t lever_off[] PROGMEM = { NOTE_G4, 20, NOTE_F3, 20, TONES_END };
 
   const uint16_t drop_barrel[] PROGMEM = { NOTE_F1, 50, NOTE_C1, 50, NOTE_A1, 50, TONES_END };
-  const uint16_t jump_barrel[] PROGMEM = { 220,50, 440,50, 880,50, TONES_END };
+  const uint16_t jump_barrel[] PROGMEM = { NOTE_A4,75, NOTE_B4,75, NOTE_CS5,75, NOTE_G5,150, NOTE_DS5,150, TONES_END };
+  const uint16_t jump[] PROGMEM = { NOTE_A4,75, NOTE_JUMP,2, TONES_END };
+
+  // https://tcrf.net/Donkey_Kong_%28Arcade%29#Unused_Music
+  // https://github.com/furrykef/dkdasm/blob/master/dkong-snd.asm#L700
+  const uint16_t unused_mischievous_cutscene_music[] PROGMEM = { NOTE_F2,360, NOTE_B1,360, NOTE_F2,360, NOTE_B1,360,
+    NOTE_F3,180, NOTE_DS3,180, NOTE_F3,180, NOTE_DS3,180, NOTE_REST,25, NOTE_DS3,90, NOTE_REST,90, NOTE_DS3,90,
+    NOTE_REST,90, NOTE_DS3,90, NOTE_REST,90, NOTE_DS3,90, NOTE_REST,90, NOTE_G3,360, NOTE_FS3,360, NOTE_G3,360, NOTE_E3,360,
+    NOTE_F3,90, NOTE_E3,90, NOTE_F3,90, NOTE_E3,90, NOTE_F3,90, NOTE_E3,90, NOTE_F3,90, NOTE_E3,90, NOTE_F3,750,
+    TONES_END };
 
   const uint16_t falling[] PROGMEM = {
-    NOTE_G5, 50, NOTE_E5, 50, NOTE_C5, 50, NOTE_A5, 50, 
-    NOTE_F4, 50, NOTE_D4, 50, NOTE_B4, 50, 
-    NOTE_G3, 50, NOTE_E3, 50, NOTE_C3, 50, NOTE_A3, 50, 
-    NOTE_F2, 50, NOTE_D2, 50, NOTE_B2, 50, 
-    NOTE_B2, 50, NOTE_REST, 20, NOTE_B2, 50, NOTE_REST, 20, NOTE_B2, 50, 
+    NOTE_G5, 50, NOTE_E5, 50, NOTE_C5, 50, NOTE_A5, 50,
+    NOTE_F4, 50, NOTE_D4, 50, NOTE_B4, 50,
+    NOTE_G3, 50, NOTE_E3, 50, NOTE_C3, 50, NOTE_A3, 50,
+    NOTE_F2, 50, NOTE_D2, 50, NOTE_B2, 50,
+    NOTE_B2, 50, NOTE_REST, 20, NOTE_B2, 50, NOTE_REST, 20, NOTE_B2, 50,
     TONES_END
   };
 
   const uint16_t crash_into_barrel[] PROGMEM = {
-    NOTE_G5, 50, NOTE_E5, 50, NOTE_C5, 50, NOTE_A5, 50, 
-    NOTE_F4, 50, NOTE_D4, 50, NOTE_B4, 50, 
+    NOTE_G5, 50, NOTE_E5, 50, NOTE_C5, 50, NOTE_A5, 50,
+    NOTE_F4, 50, NOTE_D4, 50, NOTE_B4, 50,
     TONES_END
   };
 

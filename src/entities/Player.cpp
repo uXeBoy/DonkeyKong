@@ -2,6 +2,7 @@
 
 #include "../utils/Enums.h"
 #include "../map/Coordinates.h"
+#include "../sounds/Sounds.h"
 
 #define JUMP_POSITIONS 37
 
@@ -89,6 +90,12 @@ bool Player::isFalling() {
 
 }
 
+void Player::setSound(ArduboyTonesExt *sound) {
+
+  this->sound = sound;
+
+}
+
 void Player::setPosition(uint16_t position) {
 
   this->position = position;
@@ -169,6 +176,7 @@ void Player::updateJump() {
 
 void Player::startJump() {
 
+  this->sound->tones(Sounds::jump);
   this->jumpPosition = 1;
 
 }

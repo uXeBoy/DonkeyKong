@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../arduboyTones/ArduboyTonesPitches.h"
+#include "../arduboyTones/ArduboyTonesExt.h"
 #include "../utils/Arduboy2Ext.h"
 #include "../Utils/Enums.h"
 #include "../map/Coordinates.h"
@@ -22,6 +24,7 @@ class Player {
     bool isLeaping();
     bool isFalling();
 
+    void setSound(ArduboyTonesExt *sound);
     void setPosition(uint16_t position);
     void setJumpPosition(uint8_t jumpPosition);
     void setMovements(uint8_t movements);
@@ -58,6 +61,7 @@ class Player {
     bool dead = false;
     bool leaping = false;
     bool falling = false;
+    ArduboyTonesExt *sound;
 
 };
 

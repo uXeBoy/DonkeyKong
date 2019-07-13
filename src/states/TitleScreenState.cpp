@@ -23,22 +23,22 @@ void TitleScreenState::activate(StateMachine & machine) {
 
   auto & gameStats = machine.getContext().gameStats;
   auto & arduboy = machine.getContext().arduboy;
-  auto & sound = machine.getContext().sound;  
-	
+  auto & sound = machine.getContext().sound;
+
   gameStats.resetGame();
-  sound.setOutputEnabled(arduboy.audio.enabled);
+  sound.volumeMode(VOLUME_ALWAYS_HIGH);
 
   this->barrelPos = 4;
   this->barrelRot_LHS = 0;
   this->barrelRot_RHS = 0;
   this->pressACounter = 0;
-  //sound.tones(Sounds::falling);
+  sound.tones(Sounds::unused_mischievous_cutscene_music);
 
 }
 
 
 // ----------------------------------------------------------------------------
-//  Handle state updates .. 
+//  Handle state updates ..
 //
 void TitleScreenState::update(StateMachine & machine) {
 
@@ -89,11 +89,11 @@ void TitleScreenState::update(StateMachine & machine) {
 
 	if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
     gameStats.mode = (justPressed & A_BUTTON ? GameMode::Easy : GameMode::Hard);
-		machine.changeState(GameStateType::PlayGameScreen); 
+		machine.changeState(GameStateType::PlayGameScreen);
 	}
 
 	if (justPressed & UP_BUTTON || justPressed & DOWN_BUTTON || justPressed & LEFT_BUTTON || justPressed & RIGHT_BUTTON) {
-		machine.changeState(GameStateType::HighScoreScreen); 
+		machine.changeState(GameStateType::HighScoreScreen);
 	}
 
 
@@ -105,7 +105,7 @@ void TitleScreenState::update(StateMachine & machine) {
 
 
 // ----------------------------------------------------------------------------
-//  Render the state .. 
+//  Render the state ..
 //
 void TitleScreenState::render(StateMachine & machine) {
 

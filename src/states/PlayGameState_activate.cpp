@@ -13,9 +13,10 @@ void PlayGameState::activate(StateMachine & machine) {
 
   auto & gameStats = machine.getContext().gameStats;
   auto & arduboy = machine.getContext().arduboy;
-  auto & sound = machine.getContext().sound;  
+  auto & sound = machine.getContext().sound;
 
   this->lever.setSound(&sound);
+  this->player.setSound(&sound);
   this->gorilla.setSound(&sound);
   this->lever.setCrane(&crane);
   this->player.reset();
@@ -31,7 +32,7 @@ void PlayGameState::activate(StateMachine & machine) {
 
     barrel.setPosition(0);
     barrel.setEnabled(false);
-    
+
   }
 
   for (uint8_t x = 0; x < this->numberOfBarrelsInPlay; x++) {
@@ -75,4 +76,3 @@ void PlayGameState::activate(StateMachine & machine) {
   BaseState::setPaused(false);
 
 }
-  

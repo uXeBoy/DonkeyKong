@@ -8,28 +8,28 @@
 //
 void SplashScreenState::activate(StateMachine & machine) {
 
-  (void)machine;
+    auto & sound = machine.getContext().sound;
+	auto & arduboy = machine.getContext().arduboy;
+
+  sound.setOutputEnabled(arduboy.audio.enabled);
+  sound.volumeMode(VOLUME_ALWAYS_NORMAL);
 
 }
 
 
 // ----------------------------------------------------------------------------
-//  Handle state updates .. 
+//  Handle state updates ..
 //
-void SplashScreenState::update(StateMachine & machine) { 
+void SplashScreenState::update(StateMachine & machine) {
 
+    auto & sound = machine.getContext().sound;
 	auto & arduboy = machine.getContext().arduboy;
 	auto justPressed = arduboy.justPressedButtons();
-
-  if (justPressed > 0 && this->counter > 0) {
-
-    this->counter = 124;
-
-  }
 
   if (justPressed > 0 && this->counter == 0) {
 
     this->counter = 1;
+    sound.tone(NOTE_B2, 0);
 
   }
 
@@ -37,15 +37,38 @@ void SplashScreenState::update(StateMachine & machine) {
 
     this->counter++;
 
-    if (this->counter == 125) machine.changeState(GameStateType::TitleScreen); 
-
+    if      (this->counter == 13)  { // 256 Hz
+      OCR3A = 3905;
+    }
+    else if (this->counter == 26)  { // 512 Hz
+      OCR3A = 1952;
+    }
+    else if (this->counter == 39)  { // 1000 Hz
+      OCR3A = 999;
+    }
+    else if (this->counter == 55)  { // 2000 Hz
+      OCR3A = 499;
+    }
+    else if (this->counter == 71)  { // 4000 Hz
+      OCR3A = 249;
+    }
+    else if (this->counter == 87)  { // 8820 Hz
+      OCR3A = 112;
+    }
+    else if (this->counter == 103) { // 11025 Hz
+      OCR3A = 90;
+    }
+    else if (this->counter == 125) {
+      sound.noTone();
+      machine.changeState(GameStateType::TitleScreen);
+    }
   }
 
 }
 
 
 // ----------------------------------------------------------------------------
-//  Render the state .. 
+//  Render the state ..
 //
 void SplashScreenState::render(StateMachine & machine) {
 
@@ -69,7 +92,7 @@ void SplashScreenState::render(StateMachine & machine) {
     uint8_t i = (this->counter / 15) % 4;
 
     for (uint8_t j = 0; j < i; j++) {
-      
+
         arduboy.drawPixel(79 + (j * 2), 49, WHITE);
 
     }

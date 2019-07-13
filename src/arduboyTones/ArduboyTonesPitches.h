@@ -8,6 +8,7 @@
 #ifndef ARDUBOY_TONES_PITCHES_H
 #define ARDUBOY_TONES_PITCHES_H
 
+#define NOTE_JUMP 0x7FFF
 #define NOTE_REST 0
 #define NOTE_C0  16
 #define NOTE_CS0 17
@@ -44,7 +45,7 @@
 #define NOTE_GS2 104
 #define NOTE_A2  110
 #define NOTE_AS2 117
-#define NOTE_B2  123
+#define NOTE_B2  128
 #define NOTE_C3  131
 #define NOTE_CS3 139
 #define NOTE_D3  147

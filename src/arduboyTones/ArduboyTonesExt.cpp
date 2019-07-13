@@ -1,6 +1,6 @@
 /**
  * @file ArduboyTones.cpp
- * \brief An Arduino library for playing tones and tone sequences, 
+ * \brief An Arduino library for playing tones and tone sequences,
  * intended for the Arduboy game system.
  */
 
@@ -43,6 +43,7 @@ static bool (*outputEnabled)();
 
 static volatile long durationToggleCount = 0;
 static volatile bool tonesPlaying = false;
+static volatile bool tonesJumping = false;
 static volatile bool toneSilent;
 #ifdef TONES_VOLUME_CONTROL
 static volatile bool toneHighVol;
@@ -212,6 +213,11 @@ void ArduboyTonesExt::nextTone()
       toneSilent = true;
       bitClear(TONE_PIN_PORT, TONE_PIN); // set the pin low
     }
+    else if (freq == NOTE_JUMP) {
+      ocrValue = F_CPU / 8 / NOTE_A3 / 2 - 1;
+      toneSilent = false;
+      tonesJumping = true;
+    }
     else {
       ocrValue = F_CPU / 8 / freq / 2 - 1;
       toneSilent = false;
@@ -273,6 +279,9 @@ ISR(TIMER3_COMPA_vect)
 {
   if (durationToggleCount != 0) {
     if (!toneSilent) {
+      if (tonesJumping) {
+        OCR3A = OCR3A - 15;
+      }
       *(&TONE_PIN_PORT) ^= TONE_PIN_MASK; // toggle the pin
 #ifdef TONES_VOLUME_CONTROL
       if (toneHighVol) {
@@ -285,6 +294,9 @@ ISR(TIMER3_COMPA_vect)
     }
   }
   else {
+    if (tonesJumping) {
+      tonesJumping = false;
+    }
     ArduboyTonesExt::nextTone();
   }
 }
