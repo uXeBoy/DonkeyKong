@@ -17,6 +17,7 @@ void PlayGameState::activate(StateMachine & machine) {
 
   this->lever.setSound(&sound);
   this->player.setSound(&sound);
+  this->hook.setSound(&sound);
   this->gorilla.setSound(&sound);
   this->lever.setCrane(&crane);
   this->player.reset();

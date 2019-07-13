@@ -8,6 +8,8 @@ namespace Sounds {
   const uint16_t drop_barrel[] PROGMEM = { NOTE_F1, 50, NOTE_C1, 50, NOTE_A1, 50, TONES_END };
   const uint16_t jump_barrel[] PROGMEM = { NOTE_A4,75, NOTE_B4,75, NOTE_CS5,75, NOTE_G5,150, NOTE_DS5,150, TONES_END };
   const uint16_t jump[] PROGMEM = { NOTE_A4,75, NOTE_JUMP,2, TONES_END };
+  const uint16_t hammer_time[] PROGMEM = { NOTE_A3,180, NOTE_A3,90, NOTE_A3,90, NOTE_A3,180, NOTE_A3,180,
+                                           NOTE_CS4,180, NOTE_A3,180, NOTE_CS4,180, NOTE_A3,180, TONES_END };
 
   // https://tcrf.net/Donkey_Kong_%28Arcade%29#Unused_Music
   // https://github.com/furrykef/dkdasm/blob/master/dkong-snd.asm#L700
