@@ -326,14 +326,38 @@ Serial.print(" barrelsEnabled > " + this->numberOfBarrelsInPlay);
           launch = false;
         }
 
-        if (launch && (disabledBarrel != nullptr)) {
+//         if (launch && (disabledBarrel != nullptr)) {
 
-Serial.print(" launch Barrel ! ");
-          uint8_t countdown = random(5, 40);
-          disabledBarrel->setEnabledCountdown(countdown);
-          this->gorilla.launch(disabledBarrel, countdown);
+// Serial.print(" launch Barrel ! ");
+//           uint8_t countdown = random(5, 40);
+// Serial.print(countDown);
+//           disabledBarrel->setEnabledCountdown(countdown);
+//           this->gorilla.launch(disabledBarrel, countdown);
+
+//         }
+
+        if (launch) {
+Serial.print("launch me");
+          for (auto &barrel : this->barrels) {
+
+
+            // Look for a barrel that is not enabled (or about to be launched) ..
+
+            if (!barrel.isEnabledOrPending()) { 
+Serial.print("Go gadget");
+
+              uint8_t countdown = random(5, 40);
+              Barrel* ptr_Barrel = &barrel;
+              barrel.setEnabledCountdown(countdown);
+              this->gorilla.launch(ptr_Barrel, countdown);
+              break;
+
+            }
+
+          }
 
         }
+
 
       }
 Serial.println("");
