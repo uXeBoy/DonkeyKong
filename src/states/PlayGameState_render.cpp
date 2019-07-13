@@ -107,7 +107,7 @@ void PlayGameState::render(StateMachine & machine) {
 
     if (!maskTop) {
 
-      if (this->introDelay < 10 || this->introDelay > 100 || gameStats.gameOver) {
+      if (this->introDelay < 10 || this->introDelay > INTRO_MOVE_TO_BOTTOM || gameStats.gameOver) {
 
         if (!hidePlayer) {
 

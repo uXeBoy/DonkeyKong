@@ -7,12 +7,16 @@
 
 // Comment out IGNORE_BARREL_COLLISIONS to include colllision detection ..
 #define _IGNORE_BARREL_COLLISIONS
-#define NUMBER_OF_HOOKS 4
 // Comment out IGNORE_SOUNDS to include sounds ..
 #define _IGNORE_SOUNDS
 
+
 // - Game play stuff ---------------------
- 
+
+#define NUMBER_OF_HOOKS 4
+#define INTRO_DELAY_FROM_TITLE 201
+#define INTRO_DELAY_NORMAL 200
+#define INTRO_MOVE_TO_BOTTOM 100
 #define NUMBER_OF_BARRELS_MIN 5
 #define NUMBER_OF_BARRELS_MAX 9
 #define FRAME_RATE_MIN 67

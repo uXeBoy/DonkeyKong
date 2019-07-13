@@ -40,7 +40,7 @@ class PlayGameState : public BaseState { //GameState<GameContext, GameStateType>
     void incPlateCounters();
     void updatePlayerAndCrane(CranePosition position);
 
-    void resetLevel(uint8_t introDelay = 200);
+    void resetLevel(uint8_t introDelay = INTRO_DELAY_NORMAL);
     void resetGorillaAndPlates();
     void removeLowerBarrels();
     

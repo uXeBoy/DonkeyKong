@@ -510,16 +510,16 @@ void PlayGameState::update(StateMachine & machine) {
 
   switch (this->introDelay) {
 
-    case 220:
+    case INTRO_DELAY_FROM_TITLE:
       this->spawning = NO_IMAGE;
       this->showLivesLeft = true;
       break;
 
-    case 101 ... 219:
+    case 101 ... INTRO_DELAY_NORMAL:
       this->spawning = NO_IMAGE;
       break;
 
-    case 61 ... 100:
+    case 61 ... INTRO_MOVE_TO_BOTTOM:
       this->spawning = NO_IMAGE;
       this->showLivesLeft = true;
       if (gameStats.numberOfLivesLeft > 0) {
@@ -590,7 +590,7 @@ void PlayGameState::update(StateMachine & machine) {
 
     if ((justPressed & A_BUTTON) || (justPressed & B_BUTTON)) {
 
-      if (this->introDelay > 100) {
+      if (this->introDelay > INTRO_MOVE_TO_BOTTOM) {
         this->removeLowerBarrels();
       }
 

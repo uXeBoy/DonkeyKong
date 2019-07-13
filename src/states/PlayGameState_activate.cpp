@@ -24,7 +24,7 @@ void PlayGameState::activate(StateMachine & machine) {
 
   this->frameRate = FRAME_RATE_MIN;
   this->numberOfBarrelsInPlay = NUMBER_OF_BARRELS_MIN - 1;
-  this->resetLevel(220);
+  this->resetLevel(INTRO_DELAY_FROM_TITLE);
   this->resetGorillaAndPlates();
 
   for (auto &barrel : this->barrels) {
