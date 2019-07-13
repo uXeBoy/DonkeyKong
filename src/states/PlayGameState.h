@@ -45,9 +45,13 @@ class PlayGameState : public BaseState { //GameState<GameContext, GameStateType>
     void removeLowerBarrels();
     
     uint8_t introDelay;
+    uint8_t spawning;
     uint8_t preventJumpDelay;   // Used to prevent a jump if the A button is pressed to start game.
     uint8_t barrelOffset = 11;
     uint8_t numberOfBarrelsInPlay = 0;
     uint8_t frameRate = FRAME_RATE_MIN;
+
     bool showLivesLeft = true;
+    bool firstSpawnOfGame = true;
+
 };

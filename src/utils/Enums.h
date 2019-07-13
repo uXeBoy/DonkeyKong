@@ -19,10 +19,11 @@
 #define FRAME_RATE_MAX 90
 
 #define NOT_IN_A_POSITION 255
-#define INITIAL_BARREL_OFFSET 13
+#define INITIAL_BARREL_OFFSET 14
 
 #define GIRDER_COUNT 2
 #define NONE_FOUND 255
+#define NO_IMAGE 255
 
 #define LEVER_ON_COUNTDOWN 140
 
@@ -170,6 +171,7 @@ struct GameStats {
 
     uint16_t score = 0;
     uint8_t numberOfLivesLeft = 1; // 3; //SJH
+    uint8_t level = 1;
 
     GameMode mode = GameMode::Easy;
 
@@ -179,6 +181,7 @@ struct GameStats {
 
       this->numberOfLivesLeft = 3; //SJH
       this->score = 0; 
+      this->level = 1;
       this->gameOver = false;
 
     }

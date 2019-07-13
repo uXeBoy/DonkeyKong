@@ -1,6 +1,7 @@
 #include "PlayGameState.h"
 
 #include "../utils/Arduboy2Ext.h"
+#include "../utils/Utils.h"
 #include "../images/Images.h"
 #include "../sounds/Sounds.h"
 
@@ -14,7 +15,7 @@ void PlayGameState::render(StateMachine & machine) {
   auto & gameStats = machine.getContext().gameStats;
   
   const uint8_t yOffset = this->player.getYOffset();
-  const bool flash = arduboy.getFrameCountHalf(FLASH_FRAME_COUNT);
+  const bool hidePlayer = (this->playing ? false : (this->firstSpawnOfGame) ? true : arduboy.getFrameCountHalf(FLASH_FRAME_COUNT));
 
 
   // Draw Scenery ..
@@ -43,7 +44,9 @@ void PlayGameState::render(StateMachine & machine) {
 
   // Draw player
 
-  if (this->playing || flash) {
+//  if (this->playing || flash) {
+
+  if (this->playing || this->introDelay > 0) {
 
     uint8_t const *imageName = nullptr;
     uint8_t const *mask = nullptr;
@@ -59,7 +62,7 @@ void PlayGameState::render(StateMachine & machine) {
 
       case static_cast<uint8_t>(Stance::Normal) ... static_cast<uint8_t>(Stance::OnCrane_RHS):
 
-        if (y == 36 && x>=13 && x <= 75) {
+        if (y == 36 && x >= 13 && x <= 75) {
 
           imageName = Images::Mario;
           maskTop = true;
@@ -101,13 +104,29 @@ void PlayGameState::render(StateMachine & machine) {
 
     }
 
+
     if (!maskTop) {
 
-      if (mask == nullptr) {
-        Sprites::drawSelfMasked(x, y, imageName, image);
+      if (this->introDelay < 10 || this->introDelay > 100 || gameStats.gameOver) {
+
+        if (!hidePlayer) {
+
+          if (mask == nullptr) {
+            Sprites::drawSelfMasked(x, y, imageName, image);
+          }
+          else {
+            Sprites::drawExternalMask(x, y, imageName, mask, image, image);
+          }
+
+        }
+
       }
       else {
-        Sprites::drawExternalMask(x, y, imageName, mask, image, image);
+
+        if (this->spawning != NO_IMAGE) {
+          Sprites::drawSelfMasked(x, y, Images::Mario_Spawn, this->spawning - 1);
+        }
+
       }
 
     }
@@ -153,9 +172,17 @@ void PlayGameState::render(StateMachine & machine) {
 
   if (!gameStats.gameOver && this->showLivesLeft) {
 
-    Sprites::drawExternalMask(27, 20, Images::PlayerFrame, Images::PlayerFrame_Mask, 0, 0);
-    Sprites::drawSelfMasked(79, 23, Images::Player_Number, gameStats.numberOfLivesLeft - 1);
+    Sprites::drawExternalMask(2, 30, Images::Level, Images::Level_Mask, 0, 0);
 
+    uint8_t digits[3] = {};
+    extractDigits(digits, gameStats.level);
+
+    for (uint8_t j = 3; j > 0; --j) {
+
+      Sprites::drawSelfMasked(21 - (j*5), 39, Images::Scoreboard_Numbers, digits[j - 1]);
+
+    }
+    
   }
   else {
 

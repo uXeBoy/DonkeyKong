@@ -20,10 +20,11 @@ void PlayGameState::activate(StateMachine & machine) {
   this->lever.setCrane(&crane);
   this->player.reset();
   this->spaghetti.setVisible(true);
+  this->firstSpawnOfGame = true;
 
   this->frameRate = FRAME_RATE_MIN;
-  this->numberOfBarrelsInPlay = NUMBER_OF_BARRELS_MIN;
-  this->resetLevel(125);
+  this->numberOfBarrelsInPlay = NUMBER_OF_BARRELS_MIN - 1;
+  this->resetLevel(220);
   this->resetGorillaAndPlates();
 
   for (auto &barrel : this->barrels) {
@@ -43,7 +44,7 @@ void PlayGameState::activate(StateMachine & machine) {
       while (!valid) {
 
       valid = true;
-      randomPos = random(70, 185);
+      randomPos = random(60, 135);
 
       for (uint8_t y = 0; y < this->numberOfBarrelsInPlay; y++) {
 
@@ -69,9 +70,9 @@ void PlayGameState::activate(StateMachine & machine) {
   }
 
   this->playing = false;
-  BaseState::setPaused(false);
+  this->numberOfBarrelsInPlay = NUMBER_OF_BARRELS_MIN ;
 
-  //sound.setOutputEnabled(arduboy.audio.enabled);
+  BaseState::setPaused(false);
 
 }
   

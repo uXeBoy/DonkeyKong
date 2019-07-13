@@ -169,25 +169,7 @@ uint8_t PlayGameState::drawScenery(StateMachine & machine, uint8_t paintMode) {
             mask = Images::Mode_Mask;
             imageIndex = static_cast<uint8_t>(gameStats.mode);
             break;
-          
-          case static_cast<uint8_t>(Components::LivesLeft1):
-            if (gameStats.numberOfLivesLeft >= 1) {
-              imageName = Images::LivesLeft;
-            }
-            break;
-          
-          case static_cast<uint8_t>(Components::LivesLeft2):
-            if (gameStats.numberOfLivesLeft >= 2) {
-              imageName = Images::LivesLeft;
-            }
-            break;
-          
-          case static_cast<uint8_t>(Components::LivesLeft3):
-            if (gameStats.numberOfLivesLeft >= 3) {
-              imageName = Images::LivesLeft;
-            }
-            break;
-          
+                    
           case static_cast<uint8_t>(Components::Buildings):
             imageName = Images::Buildings;
             break;
@@ -285,7 +267,7 @@ void PlayGameState::removeLowerBarrels() {
 
   for (auto &barrel : this->barrels) {
 
-    if (barrel.getPosition() > 170) {
+    if (barrel.getPosition() > 155) {
       
       barrel.setPosition(0);
       barrel.setEnabled(false);

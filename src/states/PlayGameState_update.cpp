@@ -243,6 +243,7 @@ void PlayGameState::update(StateMachine & machine) {
 
             case PLAYER_VICTORY_RUN_POINTS - 1:
               gameStats.score = gameStats.score + 50;
+              gameStats.level++;
               this->player.incPlayerPosition();
 
               // Make the game that little bit harder ..
@@ -324,7 +325,7 @@ void PlayGameState::update(StateMachine & machine) {
 // Serial.print(", launch: ");
 // Serial.println(launch);
 
-      // Are we able to launch a barrel?
+//       // Are we able to launch a barrel?
 //   Serial.print("GP:");
 //   Serial.print(gorillaPosition);
 //   Serial.print(") ");
@@ -509,7 +510,17 @@ void PlayGameState::update(StateMachine & machine) {
 
   switch (this->introDelay) {
 
-    case 100:
+    case 220:
+      this->spawning = NO_IMAGE;
+      this->showLivesLeft = true;
+      break;
+
+    case 101 ... 219:
+      this->spawning = NO_IMAGE;
+      break;
+
+    case 61 ... 100:
+      this->spawning = NO_IMAGE;
       this->showLivesLeft = true;
       if (gameStats.numberOfLivesLeft > 0) {
         this->player.setPosition(0);
@@ -523,12 +534,41 @@ void PlayGameState::update(StateMachine & machine) {
       }
       break;
 
+    case 60:
+      this->spawning = 6;
+      break;
+
+    case 50:
+      this->spawning = 5;
+      break;
+
+    case 40:
+      this->spawning = 4;
+      break;
+
+    case 30:
+      this->spawning = 3;
+      break;
+
+    case 20:
+      this->spawning = 2;
+      break;
+
+    case 10:
+      this->spawning = 1;
+      break;
+
+    case 2 ... 9:
+      this->spawning = 0;
+      break;
+
     case 1:
       if (gameStats.numberOfLivesLeft > 0) {
-      this->player.reset();
-      this->playing = true;
+        this->player.reset();
+        this->playing = true;
       }
-      this->introDelay = 0;
+      this->spawning = 0;
+      this->firstSpawnOfGame = false;
       this->showLivesLeft = false;
       this->spaghetti.setVisible(true);
       this->spaghetti.incFood();
@@ -550,8 +590,14 @@ void PlayGameState::update(StateMachine & machine) {
 
     if ((justPressed & A_BUTTON) || (justPressed & B_BUTTON)) {
 
+      if (this->introDelay > 100) {
+        this->removeLowerBarrels();
+      }
+
       this->playing = true;
       this->showLivesLeft = false;
+      this->spawning = 0;
+      this->firstSpawnOfGame = false;
       this->introDelay = 0;
       this->player.reset();
       this->lever.setPosition(LeverPosition::Off);
