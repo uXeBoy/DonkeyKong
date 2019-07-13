@@ -49,11 +49,44 @@ void PlayGameState::render(StateMachine & machine) {
     uint8_t const *mask = nullptr;
     uint8_t image = this->player.getImage();
 
+    int8_t x = this->player.getXPosition(true);
+    int8_t y = this->player.getYPosition();
+
+    bool maskTop = false;
+    int8_t maskTop_XOffset = 0;
+
     switch (image) {
 
       case static_cast<uint8_t>(Stance::Normal) ... static_cast<uint8_t>(Stance::OnCrane_RHS):
-        imageName = Images::Mario;
-        mask = Images::Mario_Mask;
+
+        if (y == 36 && x>=13 && x <= 75) {
+
+          imageName = Images::Mario;
+          maskTop = true;
+
+          switch (image) {
+
+            case static_cast<uint8_t>(Stance::Normal):
+            case static_cast<uint8_t>(Stance::Running_01):
+            case static_cast<uint8_t>(Stance::Running_02):
+            case static_cast<uint8_t>(Stance::Running_03):
+            case static_cast<uint8_t>(Stance::Running_04):
+            case static_cast<uint8_t>(Stance::Jump):
+              mask = Images::Mario_Upper_Mask_LHS;
+              break;
+
+            default:
+              mask = Images::Mario_Upper_Mask_RHS;
+              maskTop_XOffset = -1;
+              break;
+            
+          }
+
+        }
+        else {
+          imageName = Images::Mario;
+          mask = Images::Mario_Mask;
+        }
         break;
 
       case static_cast<uint8_t>(Stance::Dead_01) ... static_cast<uint8_t>(Stance::Dead_03):
@@ -68,10 +101,7 @@ void PlayGameState::render(StateMachine & machine) {
 
     }
 
-    {
-
-      int8_t x = this->player.getXPosition(true);
-      int8_t y = this->player.getYPosition();
+    if (!maskTop) {
 
       if (mask == nullptr) {
         Sprites::drawSelfMasked(x, y, imageName, image);
@@ -79,6 +109,12 @@ void PlayGameState::render(StateMachine & machine) {
       else {
         Sprites::drawExternalMask(x, y, imageName, mask, image, image);
       }
+
+    }
+    else {
+
+      Sprites::drawErase(x + maskTop_XOffset, y - 1, mask, 0);
+      Sprites::drawSelfMasked(x, y, imageName, image);
 
     }
 

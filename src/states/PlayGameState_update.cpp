@@ -291,7 +291,7 @@ void PlayGameState::update(StateMachine & machine) {
     // in a position in the center of the plates.  If this is true, then we ensure there are
     // no existing barrels that have just been launched that would result in the new barrel 
     // and it to be too close together.
-    
+
     {
       uint8_t gorillaPosition = this->gorilla.isInPosition();
       bool launch = this->gorilla.readyToLaunchNewBarrel();
@@ -347,13 +347,6 @@ void PlayGameState::update(StateMachine & machine) {
 
 
       if (launch) {
-  // Serial.println(".. launch good to go! ");
-  // Serial.print("..launch good to go! ");
-  //       for (uint8_t x=0; x<this->numberOfBarrelsInPlay; x++) {
-  //         auto &barrel = this->barrels[x];
-  //         Serial.print(barrel.isEnabledOrPending());
-  //       }
-  // Serial.println(".");
 
         for (auto &barrel : this->barrels) {
 
