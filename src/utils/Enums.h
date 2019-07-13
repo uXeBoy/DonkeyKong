@@ -101,7 +101,8 @@ enum class Components : uint8_t {
   Spaghetti,
   LivesLeft3,
   LivesLeft2,
-  LivesLeft1
+  LivesLeft1,
+  Buildings
 };
 
 enum class Movements : uint8_t {

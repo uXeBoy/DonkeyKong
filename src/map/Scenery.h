@@ -11,6 +11,7 @@ namespace Coordinates {
 
   const uint8_t PROGMEM Scenery[] = {
 
+    24, 30, static_cast<uint8_t>(Components::Buildings),
     0, 25, static_cast<uint8_t>(Components::Girder_OverHead),
     0, 5, static_cast<uint8_t>(Components::Spaghetti),
 
@@ -41,12 +42,14 @@ namespace Coordinates {
     35, 75, static_cast<uint8_t>(Components::Girder_OverHead),
     87, 80, static_cast<uint8_t>(Components::Girder_OverHead),
     95, 80, static_cast<uint8_t>(Components::Girder_OverHead),
+    107, 80, static_cast<uint8_t>(Components::Girder_OverHead),
+    119, 80, static_cast<uint8_t>(Components::Girder_OverHead),
 
   99, 73, static_cast<uint8_t>(Components::Girder_OverHead),
   111, 73, static_cast<uint8_t>(Components::Girder_OverHead),
   123, 73, static_cast<uint8_t>(Components::Girder_OverHead),
 
-    109, 80, static_cast<uint8_t>(Components::EasyHard),
+    107, 80, static_cast<uint8_t>(Components::EasyHard),
 
 
     87, 63, static_cast<uint8_t>(Components::Girder_OverHead),
@@ -110,9 +113,9 @@ namespace Coordinates {
     85, 0, static_cast<uint8_t>(Components::Hook),
     0, 122, static_cast<uint8_t>(Components::Fire),
     0, 122, static_cast<uint8_t>(Components::Fire_Foreground) | SCENERY_PAINT_LAST,
-    121, 133, static_cast<uint8_t>(Components::LivesLeft1) | SCENERY_PAINT_LAST,
-    114, 133, static_cast<uint8_t>(Components::LivesLeft2) | SCENERY_PAINT_LAST,
-    107, 133, static_cast<uint8_t>(Components::LivesLeft3) | SCENERY_PAINT_LAST,
+    // 121, 133, static_cast<uint8_t>(Components::LivesLeft1) | SCENERY_PAINT_LAST,
+    // 114, 133, static_cast<uint8_t>(Components::LivesLeft2) | SCENERY_PAINT_LAST,
+    // 107, 133, static_cast<uint8_t>(Components::LivesLeft3) | SCENERY_PAINT_LAST,
 
     0, 0, static_cast<uint8_t>(Components::Girder),
 
