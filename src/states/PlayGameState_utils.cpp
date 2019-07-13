@@ -154,6 +154,10 @@ uint8_t PlayGameState::drawScenery(StateMachine & machine, uint8_t paintMode) {
               imageName = Images::LivesLeft;
             }
             break;
+          
+          case static_cast<uint8_t>(Components::Buildings):
+            imageName = Images::Buildings;
+            break;
             
         }
 

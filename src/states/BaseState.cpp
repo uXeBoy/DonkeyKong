@@ -9,12 +9,15 @@ void BaseState::renderScore(StateMachine & machine, int16_t health) {
   auto & gameStats = machine.getContext().gameStats;
   auto & arduboy = machine.getContext().arduboy;
 
-//SJH   Sprites::drawExternalMask(102, 0, Images::Scoreboard, Images::Scoreboard_Mask, 0, 0);
-  Sprites::drawExternalMask(87, 0, Images::Scoreboard, Images::Scoreboard_Mask, 0, 0);
+  Sprites::drawExternalMask(102, 0, Images::Scoreboard, Images::Scoreboard_Mask, 0, 0);
+//  Sprites::drawExternalMask(87, 0, Images::Scoreboard, Images::Scoreboard_Mask, 0, 0);
 
-  if (gameStats.numberOfLivesLeft >= 1) Sprites::drawSelfMasked(90, 3, Images::Scoreboard_Blip, 0);
-  if (gameStats.numberOfLivesLeft >= 2) Sprites::drawSelfMasked(95, 3, Images::Scoreboard_Blip, 0);
-  if (gameStats.numberOfLivesLeft >= 3) Sprites::drawSelfMasked(100, 3, Images::Scoreboard_Blip, 0);
+  // if (gameStats.numberOfLivesLeft >= 1) Sprites::drawSelfMasked(90, 3, Images::Scoreboard_Blip, 0);
+  // if (gameStats.numberOfLivesLeft >= 2) Sprites::drawSelfMasked(95, 3, Images::Scoreboard_Blip, 0);
+  // if (gameStats.numberOfLivesLeft >= 3) Sprites::drawSelfMasked(100, 3, Images::Scoreboard_Blip, 0);
+  if (gameStats.numberOfLivesLeft >= 3) Sprites::drawExternalMask(102, 10, Images::LivesLeft, Images::LivesLeft_Mask, 0, 0);
+  if (gameStats.numberOfLivesLeft >= 2) Sprites::drawExternalMask(110, 10, Images::LivesLeft, Images::LivesLeft_Mask, 0, 0);
+  if (gameStats.numberOfLivesLeft >= 1) Sprites::drawExternalMask(118, 10, Images::LivesLeft, Images::LivesLeft_Mask, 0, 0);
 
 
   uint8_t digits[4] = {};
@@ -22,8 +25,8 @@ void BaseState::renderScore(StateMachine & machine, int16_t health) {
 
   for (uint8_t j = 4; j > 0; --j) {
 
-//    Sprites::drawSelfMasked(125 - (j*5), 3, Images::Scoreboard_Numbers, digits[j - 1]);
-    Sprites::drawSelfMasked(126 - (j*5), 3, Images::Scoreboard_Numbers, digits[j - 1]);
+    Sprites::drawSelfMasked(125 - (j*5), 3, Images::Scoreboard_Numbers, digits[j - 1]);
+//    Sprites::drawSelfMasked(126 - (j*5), 3, Images::Scoreboard_Numbers, digits[j - 1]);
 
   }
 

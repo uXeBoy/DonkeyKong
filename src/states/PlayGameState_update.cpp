@@ -299,7 +299,7 @@ void PlayGameState::update(StateMachine & machine) {
       Barrel* disabledBarrel = nullptr;
 
       if (launch) {
-
+Serial.print("Launch: ");
         for (auto &barrel : this->barrels) {
 
           if (!barrel.isEnabledOrPending()) { 
@@ -318,11 +318,17 @@ void PlayGameState::update(StateMachine & machine) {
           }
 
         }
+Serial.print(" check1 ");
+Serial.print((launch ? "T":"F"));
 
-        if (barrelsEnabled >= this->numberOfBarrelsInPlay) launch = false;
+        if (barrelsEnabled >= this->numberOfBarrelsInPlay) {
+Serial.print(" barrelsEnabled > " + this->numberOfBarrelsInPlay);
+          launch = false;
+        }
 
-        if (launch && disabledBarrel != nullptr) {
+        if (launch && (disabledBarrel != nullptr)) {
 
+Serial.print(" launch Barrel ! ");
           uint8_t countdown = random(5, 40);
           disabledBarrel->setEnabledCountdown(countdown);
           this->gorilla.launch(disabledBarrel, countdown);
@@ -330,7 +336,7 @@ void PlayGameState::update(StateMachine & machine) {
         }
 
       }
-
+Serial.println("");
 
       // Update barrel positions and detect collisions with the player ..
 

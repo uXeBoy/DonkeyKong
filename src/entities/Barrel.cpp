@@ -156,6 +156,6 @@ Rect Barrel::getRect(uint8_t yOffset) {
   int8_t x = pgm_read_byte(&Coordinates::Barrel[(this->position * BARREL_NUMBER_OF_ELEMENTS)]);
   int8_t y = pgm_read_byte(&Coordinates::Barrel[(this->position * BARREL_NUMBER_OF_ELEMENTS) + 1]) - yOffset;
 
-  return Rect{x + 1, y + 1, 7, 7 };
+  return Rect{x + 2, y + 2, 5, 5 };
 
 }
