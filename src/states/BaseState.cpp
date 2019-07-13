@@ -72,7 +72,7 @@ void BaseState::renderGameOverOrPause(StateMachine & machine) {
 
   if (gameStats.gameOver) {
 
-    Sprites::drawExternalMask(25, 20, Images::GameOver, Images::GameOver_Mask, 0, 0); 
+    Sprites::drawExternalMask(39, 23, Images::GameOver, Images::GameOver_Mask, 0, 0); 
 
   }
 
@@ -80,7 +80,7 @@ void BaseState::renderGameOverOrPause(StateMachine & machine) {
 
   if (this->paused) {
 
-    Sprites::drawExternalMask(39, 20, Images::Pause, Images::Pause_Mask, 0, 0); 
+    Sprites::drawExternalMask(46, 23, Images::Pause, Images::Pause_Mask, 0, 0); 
 
   }
 
